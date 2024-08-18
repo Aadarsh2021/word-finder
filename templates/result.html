@@ -1,17 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Found Words</h1>
-    <p>Letters: {{ letters }}</p>
-    <p>Number of letters: {{ num_letters }}</p>
-    <ul>
-        {% for word, length in words.items() %}
-            <li>{{ word }} ({{ length }})</li>
-        {% endfor %}
-    </ul>
-    <a href="{{ url_for('index') }}">Back</a>
+    <header>
+        <h1>Results for Your Letters</h1>
+    </header>
+    <main>
+        <p><strong>Letters:</strong> {{ letters }}</p>
+        <p><strong>Number of Letters:</strong> {{ num_letters }}</p>
+        <h2>Found Words:</h2>
+        <ul>
+            {% for word, length in words.items() %}
+                <li>{{ word }} ({{ length }} letters)</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('index') }}">Start a New Search</a>
+    </main>
+    <footer>
+        <p>&copy; 2024 Word Finder App</p>
+    </footer>
 </body>
 </html>

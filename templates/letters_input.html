@@ -1,17 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Input Letters</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Letters</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function generateInputFields() {
+            var numLetters = document.getElementById("num_letters").value;
+            var container = document.getElementById("letters_container");
+            container.innerHTML = ''; // Clear existing fields
+            for (var i = 0; i < numLetters; i++) {
+                var input = document.createElement("input");
+                input.type = "text";
+                input.name = "letters";
+                input.maxLength = "1";
+                input.placeholder = "Letter " + (i + 1);
+                input.required = true;
+                container.appendChild(input);
+            }
+        }
+    </script>
 </head>
 <body>
-    <h1>Enter Letters</h1>
-    <form method="post">
-        <label for="letters">Letters:</label>
-        <input type="text" id="letters" name="letters" required>
-        <button type="submit">Find Words</button>
-    </form>
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
+    <header>
+        <h1>Enter Your Letters</h1>
+    </header>
+    <main>
+        <form method="POST" action="{{ url_for('letters_input', num_letters=num_letters) }}">
+            <label for="num_letters">Number of letters:</label>
+            <input type="number" id="num_letters" name="num_letters" min="1" value="{{ num_letters }}" onchange="generateInputFields()" required>
+            <div id="letters_container">
+                <!-- Input fields will be generated here -->
+            </div>
+            <button type="submit">Find Words</button>
+        </form>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Word Finder App</p>
+    </footer>
+    <script>
+        // Initialize input fields if num_letters is already set
+        if ({{ num_letters|tojson }} !== '') {
+            generateInputFields();
+        }
+    </script>
 </body>
 </html>

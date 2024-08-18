@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for
 from itertools import permutations
 import nltk
 from nltk.corpus import words
-from urllib.parse import quote
 
 app = Flask(__name__)
 
@@ -22,12 +21,10 @@ def index():
 def letters_input(num_letters):
     if request.method == "POST":
         letters = request.form.getlist("letters")
-        letters = ''.join(letters).lower()
-        if len(letters) >= num_letters:  # Check if the input is at least the number of letters required
+        if len(letters) >= num_letters:
+            letters = ''.join(letters).lower()
             valid_words = find_words(letters)
-            # Encode the letters to ensure they are safely included in the URL
-            encoded_letters = quote(letters)
-            return render_template("result.html", words=valid_words, letters=encoded_letters, num_letters=num_letters)
+            return render_template("result.html", words=valid_words, letters=letters, num_letters=num_letters)
         else:
             error = "The number of letters provided is less than the number of letters required."
             return render_template("letters_input.html", num_letters=num_letters, error=error)
@@ -38,9 +35,16 @@ def find_words(letters):
     for i in range(1, len(letters) + 1):
         all_permutations.update([''.join(p) for p in permutations(letters, i)])
     valid_words = {word: len(word) for word in all_permutations if word in dictionary}
-    # Sort the valid words by their length
-    sorted_valid_words = dict(sorted(valid_words.items(), key=lambda item: item[1]))
+    # Sort the valid words by their length and alphabetically
+    sorted_valid_words = dict(sorted(valid_words.items(), key=lambda item: (item[1], item[0])))
     return sorted_valid_words
+
+@app.route("/result", methods=["GET"])
+def result():
+    letters = request.args.get('letters', '')
+    num_letters = request.args.get('num_letters', 0, type=int)
+    words = find_words(letters)
+    return render_template("result.html", words=words, letters=letters, num_letters=num_letters)
 
 if __name__ == "__main__":
     app.run(debug=True)
