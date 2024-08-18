@@ -8,20 +8,23 @@
 </head>
 <body>
     <div class="container">
-        <h1>Enter Letters</h1>
-        <form method="POST">
-            <label>Enter the letters:</label>
-            <div>
-                {% for i in range(num_letters) %}
-                <input type="text" name="letters" maxlength="1" required>
-                {% endfor %}
-            </div>
-            <button type="submit">Find Words</button>
-        </form>
-        {% if error %}
-        <p class="error">{{ error }}</p>
-        {% endif %}
-        <a href="{{ url_for('index') }}">Back to Main Page</a>
+        <header>
+            <h1>Enter Letters</h1>
+        </header>
+        <main>
+            <form method="POST">
+                <div class="letter-inputs">
+                    {% for i in range(num_letters) %}
+                    <input type="text" name="letters" maxlength="1" placeholder="Letter {{ i + 1 }}" required>
+                    {% endfor %}
+                </div>
+                <button type="submit">Find Words</button>
+            </form>
+            {% if error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
+            <a href="{{ url_for('index') }}" class="back-link">Back to Main Page</a>
+        </main>
     </div>
 </body>
 </html>

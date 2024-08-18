@@ -8,23 +8,29 @@
 </head>
 <body>
     <div class="container">
-        <h1>Word Finder</h1>
-        <form method="POST">
-            <label for="num_letters">Enter number of letters:</label>
-            <input type="number" id="num_letters" name="num_letters" min="1" required>
-            <button type="submit">Next</button>
-        </form>
-        {% if words %}
-        <h2>Possible words from "{{ letters }}"</h2>
-        <ul>
-            {% for word, length in words.items() %}
-            <li>{{ word }}: {{ length }}</li>
-            {% endfor %}
-        </ul>
-        {% elif error %}
-        <p class="error">{{ error }}</p>
-        {% endif %}
-        <a href="{{ url_for('index') }}">Back to Main Page</a>
+        <header>
+            <h1>Word Finder</h1>
+        </header>
+        <main>
+            <form method="POST">
+                <label for="num_letters">Enter number of letters:</label>
+                <input type="number" id="num_letters" name="num_letters" min="1" required>
+                <button type="submit">Submit</button>
+            </form>
+            {% if words %}
+            <section>
+                <h2>Possible words from "{{ letters }}"</h2>
+                <ul class="word-list">
+                    {% for word, length in words.items() %}
+                    <li>{{ word }}: {{ length }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% elif error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
+            <a href="{{ url_for('index') }}" class="back-link">Back to Main Page</a>
+        </main>
     </div>
 </body>
 </html>
