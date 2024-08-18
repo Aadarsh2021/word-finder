@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from itertools import permutations
 import nltk
 from nltk.corpus import words
+from urllib.parse import quote
 
 app = Flask(__name__)
 
