@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Finder Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Word Finder Results</h1>
+    </header>
+    <main>
+        <section class="result-section">
+            <h2>Results for: "{{ letters }}"</h2>
+            {% if words %}
+                <ul class="word-list">
+                    {% for word, length in words.items() %}
+                        <li>{{ word }}: {{ length }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No valid words found.</p>
+            {% endif %}
+            <a href="{{ url_for('index') }}" class="button">Back to Main Page</a>
+            <a href="{{ url_for('letters_input', num_letters=num_letters) }}" class="button">Try Again</a>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Word Finder</p>
+    </footer>
+</body>
+</html>
