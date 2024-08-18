@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Word Finder</h1>
+        <form method="POST">
+            <label for="num_letters">Enter number of letters:</label>
+            <input type="number" id="num_letters" name="num_letters" min="1" required>
+            <button type="submit">Next</button>
+        </form>
+        {% if words %}
+        <h2>Possible words from "{{ letters }}"</h2>
+        <ul>
+            {% for word, length in words.items() %}
+            <li>{{ word }}: {{ length }}</li>
+            {% endfor %}
+        </ul>
+        {% elif error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+        <a href="{{ url_for('index') }}">Back to Main Page</a>
+    </div>
+</body>
+</html>

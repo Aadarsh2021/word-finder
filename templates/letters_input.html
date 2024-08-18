@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Letters</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Enter Letters</h1>
+        <form method="POST">
+            <label>Enter the letters:</label>
+            <div>
+                {% for i in range(num_letters) %}
+                <input type="text" name="letters" maxlength="1" required>
+                {% endfor %}
+            </div>
+            <button type="submit">Find Words</button>
+        </form>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+        <a href="{{ url_for('index') }}">Back to Main Page</a>
+    </div>
+</body>
+</html>
