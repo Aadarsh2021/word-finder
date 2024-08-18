@@ -25,7 +25,9 @@ def letters_input(num_letters):
         letters = ''.join(letters).lower()
         if len(letters) >= num_letters:  # Check if the input is at least the number of letters required
             valid_words = find_words(letters)
-            return render_template("result.html", words=valid_words, letters=letters, num_letters=num_letters)
+            # Encode the letters to ensure they are safely included in the URL
+            encoded_letters = quote(letters)
+            return render_template("result.html", words=valid_words, letters=encoded_letters, num_letters=num_letters)
         else:
             error = "The number of letters provided is less than the number of letters required."
             return render_template("letters_input.html", num_letters=num_letters, error=error)
